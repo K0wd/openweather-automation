@@ -38,17 +38,25 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "Selenium.Support": {
+            "Microsoft.NET.Test.Sdk": {
               "target": "Package",
-              "version": "[4.11.0, )"
+              "version": "[17.1.0, )"
             },
-            "Selenium.WebDriver": {
+            "NUnit": {
               "target": "Package",
-              "version": "[4.11.0, )"
+              "version": "[3.13.3, )"
             },
-            "Selenium.WebDriver.ChromeDriver": {
+            "NUnit.Analyzers": {
               "target": "Package",
-              "version": "[117.0.5938.1100-beta, )"
+              "version": "[3.3.0, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[4.2.1, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[3.1.2, )"
             }
           },
           "imports": [
