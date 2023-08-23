@@ -5,10 +5,14 @@ namespace Tests
     public class HomePageTests
     {
         HomePage objHomePage = new HomePage();
+        API objAPI = new API();
 
         [SetUp]
         public void Setup()
         {
+            objHomePage.Login("solarplustesting@gmail.com", "7eYPSX.tt#/*K2+");
+
+            Assert.IsTrue(objHomePage._driver.FindElement(HomePageVariables.modalNotice).Text.Contains("successfull"));
         }
 
         [TearDown]
@@ -18,20 +22,18 @@ namespace Tests
         }
 
         [Test]
-        public void RetrieveApiKey()
+        public async Task SearchCity()
         {
-            objHomePage.NavigateTo(HomePageVariables.LOGIN_URL);
+            string apikey = objHomePage.GetApiKey();
 
-            objHomePage.Login("solarplustesting@gmail.com", "7eYPSX.tt#/*K2+");
+            await objAPI.GetCityData(apikey);
 
-            Assert.IsTrue(objHomePage._driver.FindElement(HomePageVariables.modalNotice).Text.Contains("successfull"));
+            objHomePage._driver.FindElement(HomePageVariables.textboxSearchCity).SendKeys("Marilao");
+            objHomePage._driver.FindElement(HomePageVariables.buttonSearchCity).Click();
+            objHomePage._driver.FindElement(HomePageVariables.listFirstResult).Click();
 
-            objHomePage.NavigateTo(HomePageVariables.APIKEYS_URL);
-
-            string apiKey = objHomePage._driver.FindElement(HomePageVariables.textApiKeys).Text;
-
-            Assert.IsNotNull(apiKey);
-            Assert.IsNotEmpty(apiKey);
+            Assert.That(objHomePage._driver.FindElement(HomePageVariables.resultCity).Text, Is.EqualTo("Marilao, PH"));
+            Assert.IsTrue(objHomePage._driver.FindElement(HomePageVariables.resultTemp).Text.Contains("°C"));
         }
     }
 }
